@@ -6,15 +6,13 @@ RUN apk add --no-cache nodejs npm curl
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy package.json (ignore package-lock.json if it doesn't exist)
+# Copy package.json and install dependencies
 COPY package.json ./
-
-# Install dependencies (will work even if package-lock.json is missing)
 RUN npm install
 
-# Copy everything else
+# Copy all project files
 COPY . .
 
-# Default command
-CMD ["node", "--version"]
+# Run tests inside the container
+CMD ["npm", "test"]
 
